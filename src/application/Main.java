@@ -16,10 +16,10 @@ public class Main {
         ChessMatch chessMatch = new ChessMatch();
         List<ChessPiece> captured = new ArrayList<>();
 
-        while (true){
+        while (!chessMatch.getCheckMate()){
             try{
             UI.clearScreen();
-            UI.printBoard(chessMatch, List<ChessPiece> captured);
+            UI.printMatch(chessMatch, captured);
             System.out.println();
             System.out.println("Source: ");
             ChessPosition source = UI.readChessPosition(sc);
@@ -27,11 +27,13 @@ public class Main {
             boolean[][] possibleMoves = chessMatch.possibleMoves(source);
             UI.clearScreen();
             UI.printBoard(chessMatch.getPieces(), possibleMoves);
+            
             System.out.println();
             System.out.println("Target: ");
             ChessPosition target = UI.readChessPosition(sc);
 
             ChessPiece capturedePiece = chessMatch.performChessMove(source, target); 
+
                 if (capturedePiece != null) {
                     captured.add(capturedePiece);
                 }
@@ -46,5 +48,7 @@ public class Main {
                 sc.nextLine();
             }   
         }
+        UI.clearScreen();
+        UI.printMatch(chessMatch, captured);
     }
 }
